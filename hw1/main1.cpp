@@ -30,6 +30,7 @@ int main(){
      while(ture){
         cout <<"請輸入 第" << i+1 << "位學生的姓名 (長度不超過 " << m << " 個字元):" <<endl;
         getline(cin,names[i]);
+        //讀一個cin string,並存到 names[i] 這個 string 變數中->getline(輸入串流, 目標字串);
         
         if(names[i].length() <= m){
           ture=0;
