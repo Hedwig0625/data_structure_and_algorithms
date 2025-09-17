@@ -41,5 +41,8 @@ int main(){
         cout << "第 " << i + 1 << " 位學生: " << names[i] << endl;
     }
 
+    for(int i =0;i<n;++i){
+        delete names[i];
+    }
     delete[] names;
 }
