@@ -1,19 +1,19 @@
 #include <iostream>
 #include <string>
-#incldue <limits>
+#include <limits>
 using namespace std;
 
-void bubble(char** names, int n) {
+void bubble(string* names, int n) {
     for (int i = 0; i < n - 1; ++i) {
       
         for (int j = 0; j < n - i - 1; ++j) {
           
-            size_t len1 = strlen(names[j]);
-            size_t len2 = strlen(names[j + 1]);
+            size_t len1 = names[j].length();
+            size_t len2 = names[j + 1].length();
           
             if (len1 > 0 && len2 > 0 && names[j][len1 - 1] > names[j + 1][len2 - 1]) {
               
-                char* temp = names[j];
+                string temp = names[j];
                 names[j] = names[j + 1];
                 names[j + 1] = temp;
               
