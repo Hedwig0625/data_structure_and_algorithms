@@ -14,7 +14,11 @@ int main(){
     cin >> n;
     cout << "請輸入姓名最大長度m: ";
     cin >> m;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+    //丟掉前一次cin留下的換行字元
+    //cin.ignore(最多忽略的字元數, 遇到這個字元就停止忽略)
+    //numeric_limits<streamsize>::max():代表「一個非常大的數字」，通常比緩衝區還大，確保能丟棄所有殘留字元
+    //'\n',指遇到換行就停止
 
     string* names= new string[n];
 
