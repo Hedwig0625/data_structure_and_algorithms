@@ -5,6 +5,26 @@
 #include <cstring> 
 using namespace std;
 
+void bubble(char** names, int n) {
+    for (int i = 0; i < n - 1; ++i) {
+      
+        for (int j = 0; j < n - i - 1; ++j) {
+          
+            int len1 = strlen(names[j]);
+            int len2 = strlen(names[j+1]);
+          
+            if (len1 > 0 && len2 > 0 && names[j][len1 - 1] > names[j + 1][len2 - 1]) {
+              
+                char temp[101];
+                strcpy(temp,names[j]);
+                strcpy(names[j],names[j+1]);
+                strcpy(names[j+1],temp);
+            }
+        }
+    }
+}
+
+
 int main() {
   
     int n, m;
@@ -37,13 +57,14 @@ int main() {
         }
     }
 
-   
-    cout << "輸入的學生姓名如下:";
+    bubble(names,n);
+  
+    cout << "輸入的學生姓名如下:"<<endl;
   
     for (int i = 0; i < n; ++i) {
         cout << "第 " << i + 1 << " 位學生: " << names[i] << endl;
     }
-
+  
     for(int i =0;i<n;++i){
       free(names[i]);
     }
