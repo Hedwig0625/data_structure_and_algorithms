@@ -1,0 +1,46 @@
+#include<iostream>
+#include<stdexcept>
+using namespace std;
+
+class CppArray{
+
+private:
+
+  int
+  float 
+  static const int defaultSize =10; //固定不會變的整數常數;整個class共用的
+  static const float defaultValue; //同一個山姆
+
+public:
+//a) constructor
+  CppArray(int s= defaultSize ;float initValue = defaultValue){  
+    //若沒給 s，就用 defaultSize；若沒給 initValue，就用 defaultValue
+    if(s<=0){
+      
+    }
+  
+  }
+
+//b)copy constructor
+  CppArray(){}
+
+//c)assigment operator
+  CppArray& 
+
+//d)destructor
+  ~CppArray(){
+    delete[] data;
+  }
+
+//e)subscript operator w range checking
+  float& op
+
+//f)get size
+  int GetSize()
+
+//g)friend functions for input output
+  friend
+  friend
+
+};
+
