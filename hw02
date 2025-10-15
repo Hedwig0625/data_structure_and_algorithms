@@ -6,26 +6,73 @@ class CppArray{
 
 private:
 
-  int
-  float 
-  static const int defaultSize =10; //固定不會變的整數常數;整個class共用的
-  static const float defaultValue; //同一個山姆
+  int size;   //陣列長度，有幾個
+  float data;  //實際放的float值
+  static const int defaultSize =10; //固定不會變的;整個class共用的
+  static const float defaultValue=0; //同一個山姆
 
 public:
 //a) constructor
+
   CppArray(int s= defaultSize ;float initValue = defaultValue){  
     //若沒給 s，就用 defaultSize；若沒給 initValue，就用 defaultValue
+    //inital value 初始化的預設值
+
     if(s<=0){
-      
+      throw out_of_range("IDEX OUT OF RNGE!!!!");
+
+      //key words:丟出例外;超出範圍,cout出字
     }
-  
+
+    size =s;
+    data = new float[size];
+
+    for( int i=0;i<size; i++){
+      data[i] = initValue;
+    }
+  // 建立陣列長度為size,把值initvalue都填進去每格
+
   }
 
 //b)copy constructor
-  CppArray(){}
+//拷貝建構子，用一個物件去建立另一個物件，幫新物件建立屬於自己的新資料空間，而不是共用舊的
+
+  CppArray(const CppArray& cp2) {
+//建立一個新的物件，內容(所以用&,直接操作原本的值，不用再複製),給 cp2
+//拿原本的arr的值給新的arr當作初始值，會有自己獨立的記憶體，但值跟原本的一樣
+
+    size= cp2.size;
+    data= new float[size];
+
+    for(int j=0;j< size; j++){
+      data[j] = cp2.data[j];
+    }
+
+  }
+
+//依照語法自動選擇呼叫哪個建構子
+//constructor:default or 有參數
+//CppArray a; 
+//CppArray b(5, 2.5); 
+
+//copy constructor:const CppArray& other
+//放一個已存在的物件
+//CppArray a(5, 2.5); //一般
+//CppArray b = a; //copy
+//CppArray c(a);   //copy
 
 //c)assigment operator
-  CppArray& 
+//賦值“運算"，把一個現有物件的值「覆蓋」到另一個時，把 a 的資料複製給 b，並確保舊的記憶體被釋放，不會造成記憶體洩漏
+& ??????????????
+
+
+
+//Assignment operator: & operator=(const CppArray& other);
+//已經有一個物件，然後用另一個物件「覆蓋」它的值
+//CppArray a(5, 2.5);
+//CppArray b(3, 1.0);
+//a = b;  // 這裡不是建構子，是 operator= 
+
 
 //d)destructor
   ~CppArray(){
@@ -33,10 +80,13 @@ public:
   }
 
 //e)subscript operator w range checking
+//下標運算子，用「陣列的寫法」操作物件，
   float& op
 
 //f)get size
-  int GetSize()
+  int GetSize() const {
+    return size;
+  }
 
 //g)friend functions for input output
   friend
