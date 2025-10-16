@@ -191,13 +191,15 @@ int main() {
 //印出三
 
 //cout&cin
-    cout << "Enter 5 numbers for array a:\n";
+    cout << "Enter 3 numbers for array a:\n";
     cin >> a;
     cout << "Now a = " << a << endl;
 
 //outofrange test
     CppArray d(-1,3);
     b[5] = 8.7;
+//印出terminate called after throwing an instance of 'std::out_of_range'
+  what():  IDEX OUT OF RNGE!!!!
 
     return 0;
 }
