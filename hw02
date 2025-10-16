@@ -9,7 +9,9 @@ private:
   int size;   //陣列長度，有幾個
   float data;  //實際放的float值
   static const int defaultSize =10; //固定不會變的;整個class共用的
-  static const float defaultValue=0; //同一個山姆
+  static const float defaultValue; //同一個山姆
+//不是 const 或int or char的 static 成員,必須在 class 外面初始化
+//因為它佔記憶體，需要給 compiler 一個實際位置
 
 public:
 //a) constructor
@@ -62,16 +64,35 @@ public:
 //CppArray c(a);   //copy
 
 //c)assigment operator
-//賦值“運算"，把一個現有物件的值「覆蓋」到另一個時，把 a 的資料複製給 b，並確保舊的記憶體被釋放，不會造成記憶體洩漏
-& ??????????????
+//把一個現有物件的值「覆蓋」到另一個，把 a 的資料複製給 b，並確保舊的記憶體被釋放，不會造成記憶體浪費
+
+CppArray& operator=(const CppArray& cp3){
+//回傳cpparray& 可以連續賦值
+//用＝， 這個類別在被 = 時要幹嘛
+
+  if(this != cp3 ){  
+//如果一樣，直接刪掉，啪沒了
+//this,keyword,指標，如果這個物件（a）不是那個要被複製的物件（b）
+
+    delete[] data;
+    size =cp3.size;
+    data= new float[size];
+
+    for(int i=0;i<size;i++){
+      data[i]=cp3.data[i];
+    }
+
+  }
+
+  return *this;
+}
 
 
-
-//Assignment operator: & operator=(const CppArray& other);
+//Assignment operator: operator=(const CppArray& other);
 //已經有一個物件，然後用另一個物件「覆蓋」它的值
 //CppArray a(5, 2.5);
 //CppArray b(3, 1.0);
-//a = b;  // 這裡不是建構子，是 operator= 
+//a = b;  // 這裡不是建構子，是 operator＝
 
 
 //d)destructor
@@ -80,17 +101,84 @@ public:
   }
 
 //e)subscript operator w range checking
-//下標運算子，用「陣列的寫法」操作物件，
-  float& op
+//下標運算子，用「陣列的寫法」操作物件
+
+float& operator[](int i) {
+//有一個操作子[]裡面放int
+//回傳&可以直接修改
+
+  if (i < 0 || i >= size){
+    throw out_of_range("IDEX OUT OF RNGE!!!!");
+  }
+
+  return data[i];
+}
 
 //f)get size
   int GetSize() const {
+//const放在這：這個動作保證不會改變物件的內容
+
     return size;
   }
 
-//g)friend functions for input output
-  friend
-  friend
+//g)friend functions for input output(宣告）
+
+friend ostream& operator<<(ostream& out, const CppArray& arr);
+//ostream,output stream,輸出串流,是一個class,cout
+//friend的對象是ostream&裡的<<這個operator
+//讓<<這個operator，有權限可以把const CppArray& arr（內容）,給ostream& out（動作） 
+
+friend istream& operator>>(istream& in, CppArray& arr);
+//istream,input stream,輸入串流,是一個class,cin
+//friend的對象是istream&裡的>>這個operator
+//讓>>這個operator，有權限可以把const CppArray& arr（內容）,給istream& in（動作） 
 
 };
 
+// 定義 static 成員
+//在 class 裡面宣告，但必須在 class 外面初始化
+//不管建立多少個 CppArray 物件，都共用同一個 defaultValue
+const float CppArray::defaultValue = 0.0f;
+
+// 輸出運算子 <<
+// 重新定義cout給CppArray用
+ostream& operator<<(ostream& out, const CppArray& arr) {
+    out << "[";
+    for (int i = 0; i < arr.size; i++) {
+        out << arr.data[i];
+        if (i < arr.size - 1)
+            out << ", ";
+    }
+    out << "]";
+    return out;
+}
+
+// 輸入運算子 >>
+// 重新定義cin給CppArray用
+istream& operator>>(istream& in, CppArray& arr) {
+    for (int i = 0; i < arr.size; i++) {
+        in >> arr.data[i];
+    }
+    return in;
+}
+
+
+int main() {
+    CppArray a(5, 2.5);
+    cout << "Array a = " << a << endl;
+
+    CppArray b = a; 
+    b[2] = 9.9;
+    cout << "Array b (after modify) = " << b << endl;
+
+    a = b; 
+    cout << "Array a (after assignment) = " << a << endl;
+
+    cout << "a size = " << a.GetSize() << endl;
+
+    cout << "Enter 5 numbers for array a:\n";
+    cin >> a;
+    cout << "Now a = " << a << endl;
+
+    return 0;
+}
